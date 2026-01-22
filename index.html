@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SISTEMA LAB - Gestión de Laboratorios</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <section id="auth-section" class="auth-wrapper">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="logo-circle">🔬</div>
+                <h1>Acceso Docente</h1>
+                <p>Ingresa para gestionar laboratorios</p>
+            </div>
+            <form id="auth-form" class="auth-form">
+                <input type="email" id="user-email" placeholder="Correo institucional" required>
+                <input type="password" id="user-pass" placeholder="Contraseña" required>
+                <button type="submit" id="btn-action" class="btn-primary">Entrar al Sistema</button>
+            </form>
+            <div class="auth-footer">
+                <p onclick="window.toggleAuthMode()">¿No tienes cuenta? <span class="link">Regístrate</span></p>
+                <p id="auth-error" class="error-text"></p>
+            </div>
+        </div>
+    </section>
+
+    <section id="selection-section" class="hidden selection-wrapper">
+        <div class="glass-panel">
+            <h2>Panel de Selección</h2>
+            <div class="lab-grid">
+                <div class="lab-card" onclick="window.enterLab('Laboratorio 1')"><span>💻 Lab 1</span></div>
+                <div class="lab-card" onclick="window.enterLab('Laboratorio 2')"><span>🧪 Lab 2</span></div>
+                <div class="lab-card" onclick="window.enterLab('Lab Escuela')"><span>🏫 Lab Escuela</span></div>
+            </div>
+            <button onclick="window.logout()" class="btn-outline">Cerrar Sesión</button>
+        </div>
+    </section>
+
+    <main id="main-dashboard" class="hidden dashboard-container">
+        <header class="main-header">
+            <div class="header-nav">
+                <button onclick="window.goBack()" class="btn-back">⬅ Cambiar Lab</button>
+                <h2 id="current-lab-title">Laboratorio</h2>
+            </div>
+            <div class="status-legend">
+                <span class="badge b-free">Disponible</span>
+                <span class="badge b-res">Reservado</span>
+                <span class="badge b-occ">Ocupado</span>
+            </div>
+        </header>
+
+        <div class="table-container">
+            <table id="schedule-grid">
+                <thead>
+                    <tr>
+                        <th>HORA</th>
+                        <th>LUNES</th>
+                        <th>MARTES</th>
+                        <th>MIÉRCOLES</th>
+                        <th>JUEVES</th>
+                        <th>VIERNES</th>
+                    </tr>
+                </thead>
+                <tbody id="schedule-body"></tbody>
+            </table>
+        </div>
+    </main>
+
+    <div id="modal-edit" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Gestionar Horario</h3>
+                <button onclick="window.closeModal()" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="modal-info-text" class="info-text"></p>
+                
+                <label>Estado del Laboratorio</label>
+                <select id="modal-status" onchange="window.toggleFields()">
+                    <option value="libre">✅ Disponible (Liberar)</option>
+                    <option value="reservado">🟠 Reservar</option>
+                    <option value="ocupado">🔴 Ocupado</option>
+                </select>
+
+                <div id="extra-fields" class="hidden">
+                    <label>Descripción / Motivo</label>
+                    <textarea id="modal-comment" placeholder="Ej: Clase de Programación - 3ero BGU"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="window.saveSlot()" class="btn-save">Confirmar Cambios</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
