@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control - Laboratorios Institucionales</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <section id="auth-section" class="auth-wrapper active-section">
+        <div class="auth-container">
+            <div class="auth-header">
+                <div class="inst-logo">L.P.</div>
+                <h1>Gestión de Laboratorios</h1>
+                <p>Acceso Exclusivo para Docentes</p>
+            </div>
+            <form id="auth-form" class="auth-form">
+                <div class="input-group">
+                    <input type="text" id="user-name" placeholder="Nombre completo" style="display:none;">
+                    <input type="email" id="user-email" placeholder="Correo electrónico institucional" required>
+                    <input type="password" id="user-pass" placeholder="Contraseña" required>
+                </div>
+                <button type="submit" id="btn-action" class="btn-main">Iniciar Sesión</button>
+            </form>
+            <div class="auth-footer">
+                <p id="toggle-auth">¿No tienes cuenta? <span>Crea una aquí</span></p>
+                <p id="auth-error" class="error-text"></p>
+            </div>
+        </div>
+    </section>
+
+    <div id="main-dashboard" class="hidden-section">
+        <nav class="side-nav">
+            <div class="nav-logo">LAB-SYS</div>
+            <div class="user-profile">
+                <p id="display-name">Docente</p>
+                <button onclick="logout()" class="btn-exit">Cerrar Sesión</button>
+            </div>
+            <hr>
+            <div id="lab-selector-menu">
+                <p class="nav-label">SELECCIONAR LAB</p>
+                <button onclick="enterLab('Lab Escuela')" class="nav-link">🏫 Lab Escuela</button>
+                <button onclick="enterLab('Laboratorio 1')" class="nav-link">🔬 Laboratorio 1</button>
+                <button onclick="enterLab('Laboratorio 2')" class="nav-link">💻 Laboratorio 2</button>
+            </div>
+        </nav>
+
+        <main class="content-area">
+            <header class="content-header">
+                <h2 id="current-lab-title">Seleccione un Laboratorio</h2>
+                <div class="status-legend">
+                    <span class="l-item"><i class="dot free"></i> Libre</span>
+                    <span class="l-item"><i class="dot reserved"></i> Reservado</span>
+                    <span class="l-item"><i class="dot occupied"></i> Ocupado</span>
+                </div>
+            </header>
+
+            <div class="main-layout">
+                <section class="schedule-container card">
+                    <div class="table-responsive">
+                        <table id="schedule-grid">
+                            <thead>
+                                <tr>
+                                    <th>HORA</th>
+                                    <th>LUNES</th>
+                                    <th>MARTES</th>
+                                    <th>MIÉRCOLES</th>
+                                    <th>JUEVES</th>
+                                    <th>VIERNES</th>
+                                </tr>
+                            </thead>
+                            <tbody id="schedule-body">
+                                </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="info-sidebar">
+                    <div class="card notif-card">
+                        <h3>📅 Actividad Reciente</h3>
+                        <ul id="notif-schedule-list" class="feed-list"></ul>
+                    </div>
+
+                    <div class="card fault-card">
+                        <h3>🛠️ Reportes de Fallas</h3>
+                        <ul id="notif-fault-list" class="feed-list fault-feed"></ul>
+                        <div class="report-form">
+                            <textarea id="report-text" placeholder="Describa el problema técnico..."></textarea>
+                            <button onclick="sendReport()" class="btn-report">Enviar Reporte</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <div id="modal-edit" class="modal hidden-modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Gestión de Cupo</h3>
+                <button onclick="closeModal()" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="slot-info"><span id="modal-day"></span> | <span id="modal-time"></span></p>
+                
+                <label>Estado del Laboratorio</label>
+                <select id="modal-status" onchange="toggleCommentField()">
+                    <option value="free">Disponible (Limpiar)</option>
+                    <option value="reserved">Reservar (Amarillo)</option>
+                    <option value="occupied">En Uso (Rojo)</option>
+                </select>
+
+                <div id="comment-section" class="hidden">
+                    <label>Docente Responsable</label>
+                    <input type="text" id="modal-teacher" disabled>
+                    <label>Justificación de uso / Materia</label>
+                    <textarea id="modal-comment" placeholder="Ej: Clase de Programación Web"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="saveSlot()" class="btn-save">Confirmar Cambios</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
