@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Laboratorios</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <section id="auth-section" class="auth-wrapper">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h1>Acceso Docente</h1>
+                <p>Laboratorios Institucionales</p>
+            </div>
+            <form id="auth-form" class="auth-form">
+                <input type="text" id="user-name" placeholder="Nombre completo" style="display:none;">
+                <input type="email" id="user-email" placeholder="Correo institucional" required>
+                <input type="password" id="user-pass" placeholder="Contraseña" required>
+                <button type="submit" id="btn-action" class="btn-main">Entrar</button>
+            </form>
+            <div class="auth-footer">
+                <p onclick="window.toggleAuthMode()" style="cursor:pointer; color: #2563eb;">¿No tienes cuenta? Regístrate</p>
+                <p id="auth-error" class="error-text"></p>
+            </div>
+        </div>
+    </section>
+
+    <section id="selection-section" class="hidden-section selection-wrapper">
+        <div class="selection-container">
+            <h2>Panel de Selección</h2>
+            <div class="lab-grid">
+                <div class="lab-box" onclick="window.enterLab('Lab Escuela')">🏫 Lab Escuela</div>
+                <div class="lab-box" onclick="window.enterLab('Laboratorio 1')">🔬 Laboratorio 1</div>
+                <div class="lab-box" onclick="window.enterLab('Laboratorio 2')">💻 Laboratorio 2</div>
+            </div>
+            <button onclick="window.logout()" class="btn-exit">Cerrar Sesión</button>
+        </div>
+    </section>
+
+    <div id="main-dashboard" class="hidden-section">
+        <nav class="side-nav">
+            <div class="nav-logo">LAB-SYS</div>
+            <button onclick="window.goBack()" class="nav-link">⬅ Cambiar Lab</button>
+            <button onclick="window.logout()" class="nav-link">🚪 Salir</button>
+        </nav>
+
+        <main class="content-area">
+            <header class="content-header">
+                <h2 id="current-lab-title">Laboratorio</h2>
+                <div class="status-legend">
+                    <span class="l-item"><i class="dot free"></i> Disponible</span>
+                    <span class="l-item"><i class="dot reserved"></i> Reservado</span>
+                    <span class="l-item"><i class="dot occupied"></i> Ocupado</span>
+                </div>
+            </header>
+
+            <div class="card table-container">
+                <table id="schedule-grid">
+                    <thead>
+                        <tr>
+                            <th>HORA</th>
+                            <th>LUNES</th>
+                            <th>MARTES</th>
+                            <th>MIÉRCOLES</th>
+                            <th>JUEVES</th>
+                            <th>VIERNES</th>
+                        </tr>
+                    </thead>
+                    <tbody id="schedule-body"></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <div id="modal-edit" class="modal hidden-modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Gestión de Cupo</h3>
+                <button onclick="window.closeModal()" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="modal-info-text" style="font-weight: bold; color: #2563eb; margin-bottom: 10px;"></p>
+                
+                <label>Estado del Laboratorio</label>
+                <select id="modal-status" onchange="window.toggleCommentField()">
+                    <option value="libre">Disponible (Verde)</option>
+                    <option value="reservado">Reservar (Amarillo)</option>
+                    <option value="ocupado">Ocupado (Rojo)</option>
+                </select>
+
+                <div id="comment-section" class="hidden">
+                    <label>Docente Responsable</label>
+                    <input type="text" id="modal-teacher" disabled>
+                    <label>Descripción / Motivo</label>
+                    <textarea id="modal-comment" placeholder="Indique el motivo o materia..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="window.saveSlot()" class="btn-save">Confirmar Cambios</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
