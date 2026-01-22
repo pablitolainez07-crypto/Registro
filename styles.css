@@ -1,0 +1,60 @@
+:root {
+    --primary: #0f172a;
+    --accent: #2563eb;
+    --bg: #f8fafc;
+    --text: #1e293b;
+    --white: #ffffff;
+    --green: #10b981;
+    --yellow: #f59e0b;
+    --red: #ef4444;
+}
+
+body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; color: var(--text); }
+
+/* AUTH SECTION */
+.auth-wrapper { height: 100vh; display: flex; justify-content: center; align-items: center; background: var(--primary); }
+.auth-container { background: white; padding: 2.5rem; border-radius: 1rem; width: 350px; text-align: center; }
+.auth-form input { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+
+/* LAYOUT DASHBOARD */
+#main-dashboard { display: flex; height: 100vh; }
+.side-nav { width: 220px; background: var(--primary); color: white; padding: 1.5rem; }
+.content-area { flex: 1; padding: 1.5rem; overflow-y: auto; }
+.main-layout { display: grid; grid-template-columns: 1fr 300px; gap: 1.5rem; }
+
+/* TABLA E INTERACCIÓN */
+table { width: 100%; border-collapse: separate; border-spacing: 5px; }
+th { background: #f1f5f9; padding: 10px; font-size: 0.75rem; }
+td { 
+    height: 85px; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    text-align: center; 
+    padding: 10px; 
+    font-size: 0.85rem; 
+    transition: 0.2s; 
+    border: 1px solid #eee;
+    pointer-events: auto; /* Asegura que el clic funcione */
+}
+.cell-free { background: #fff; border: 1px dashed #cbd5e1; color: #94a3b8; }
+.cell-reserved { background: #fffde7; border: 1px solid var(--yellow); color: #854d0e; }
+.cell-occupied { background: #fef2f2; border: 1px solid var(--red); color: #991b1b; }
+
+/* MODAL CORREGIDO */
+.modal { 
+    position: fixed; 
+    inset: 0; 
+    background: rgba(0,0,0,0.7); 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    z-index: 9999; /* Asegura que esté al frente */
+}
+.modal-box { background: white; padding: 25px; border-radius: 12px; width: 380px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); }
+.hidden-modal, .hidden { display: none !important; }
+
+/* BOTONES Y ESTADOS */
+.btn-main { background: var(--accent); color: white; border: none; width: 100%; padding: 12px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+.btn-save { background: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; width: 100%; margin-top: 15px; }
+.dot { height: 10px; width: 10px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+.free { background: #cbd5e1; } .reserved { background: var(--yellow); } .occupied { background: var(--red); }
