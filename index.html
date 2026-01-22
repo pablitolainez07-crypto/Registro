@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Laboratorios Institucionales</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <section id="auth-section" class="auth-wrapper">
+        <div class="auth-container">
+            <div class="auth-header">
+                <div class="inst-logo">L.P.</div>
+                <h1>Gestión de Laboratorios</h1>
+                <p>Acceso para Docentes</p>
+            </div>
+            <form id="auth-form" class="auth-form">
+                <input type="text" id="user-name" placeholder="Nombre completo" style="display:none;">
+                <input type="email" id="user-email" placeholder="Correo institucional" required>
+                <input type="password" id="user-pass" placeholder="Contraseña" required>
+                <button type="submit" id="btn-action" class="btn-main">Iniciar Sesión</button>
+            </form>
+            <div class="auth-footer">
+                <p id="toggle-auth">¿No tienes cuenta? <span onclick="window.toggleAuthMode()">Regístrate aquí</span></p>
+                <p id="auth-error" class="error-text"></p>
+            </div>
+        </div>
+    </section>
+
+    <section id="selection-section" class="hidden-section selection-wrapper">
+        <div class="selection-container">
+            <h2>Bienvenido, <span id="user-display">Docente</span></h2>
+            <p>Seleccione el laboratorio para gestionar el horario:</p>
+            
+            <div class="lab-grid">
+                <div class="lab-box" onclick="window.enterLab('Lab Escuela')">
+                    <h3>🏫 Escuela</h3>
+                    <p>Laboratorio Escuela</p>
+                </div>
+                <div class="lab-box" onclick="window.enterLab('Laboratorio 1')">
+                    <h3>🔬 Colegio</h3>
+                    <p>Laboratorio 1</p>
+                </div>
+                <div class="lab-box" onclick="window.enterLab('Laboratorio 2')">
+                    <h3>💻 Colegio</h3>
+                    <p>Laboratorio 2</p>
+                </div>
+            </div>
+            <button onclick="window.logout()" class="btn-logout-sec">Cerrar Sesión</button>
+        </div>
+    </section>
+
+    <div id="main-dashboard" class="hidden-section">
+        <nav class="side-nav">
+            <div class="nav-logo">LAB-SYS</div>
+            <hr>
+            <div class="nav-menu">
+                <p class="nav-label">OPCIONES</p>
+                <button onclick="window.goBack()" class="nav-link">⬅ Cambiar Lab</button>
+                <button onclick="window.logout()" class="nav-link">🚪 Salir</button>
+            </div>
+        </nav>
+
+        <main class="content-area">
+            <header class="content-header">
+                <h2 id="current-lab-title">Laboratorio</h2>
+                <div class="status-legend">
+                    <span class="l-item"><i class="dot free"></i> Disponible</span>
+                    <span class="l-item"><i class="dot reserved"></i> Reservado</span>
+                    <span class="l-item"><i class="dot occupied"></i> Ocupado</span>
+                </div>
+            </header>
+
+            <div class="main-layout">
+                <section class="schedule-container card">
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>HORA</th>
+                                    <th>LUNES</th>
+                                    <th>MARTES</th>
+                                    <th>MIÉRCOLES</th>
+                                    <th>JUEVES</th>
+                                    <th>VIERNES</th>
+                                </tr>
+                            </thead>
+                            <tbody id="schedule-body"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="info-sidebar">
+                    <div class="card notif-card">
+                        <h3>📅 Historial de Horarios</h3>
+                        <ul id="notif-schedule-list" class="feed-list"></ul>
+                    </div>
+                    <div class="card fault-card">
+                        <h3>🛠️ Reporte de Fallas</h3>
+                        <ul id="notif-fault-list" class="feed-list fault-feed"></ul>
+                        <div class="report-form">
+                            <textarea id="report-text" placeholder="Máquina con error..."></textarea>
+                            <button onclick="window.sendReport()" class="btn-report">Reportar</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <div id="modal-edit" class="modal hidden-modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Gestionar Horario</h3>
+                <button onclick="window.closeModal()" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="modal-info-text"></p>
+                <label>Cambiar Estado</label>
+                <select id="modal-status" onchange="window.toggleCommentField()">
+                    <option value="free">Liberar / Disponible</option>
+                    <option value="reserved">Reservar (Amarillo)</option>
+                    <option value="occupied">Ocupar (Rojo)</option>
+                </select>
+                <div id="comment-section" class="hidden">
+                    <label>Docente</label>
+                    <input type="text" id="modal-teacher" disabled>
+                    <label>Comentarios / Materia</label>
+                    <textarea id="modal-comment" placeholder="Ej: Clase de Informática"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="window.saveSlot()" class="btn-save">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
