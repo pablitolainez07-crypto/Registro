@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Laboratorios Institucionales</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <section id="auth-section" class="active-section">
+        <div class="auth-card">
+            <div class="header-logo">
+                <h1>Sistema de Laboratorios</h1>
+                <p>Acceso Docente</p>
+            </div>
+            <form id="auth-form">
+                <input type="text" id="user-name" placeholder="Nombre completo (Solo registro)" style="display:none;">
+                <input type="email" id="user-email" placeholder="Correo Institucional" required>
+                <input type="password" id="user-pass" placeholder="Contraseña" required>
+                
+                <button type="submit" id="btn-action">Iniciar Sesión</button>
+            </form>
+            <p id="toggle-auth">¿No tienes cuenta? <span onclick="toggleAuthMode()">Regístrate aquí</span></p>
+            <p id="auth-error" class="error-msg"></p>
+        </div>
+    </section>
+
+    <section id="selection-section" class="hidden-section">
+        <header class="top-bar">
+            <h2>Bienvenido, <span id="display-name">Docente</span></h2>
+            <button onclick="logout()" class="btn-logout">Cerrar Sesión</button>
+        </header>
+        
+        <div class="container">
+            <h3>Seleccione el Laboratorio</h3>
+            
+            <div class="category-group">
+                <h4>🏫 Categoría: Escuela</h4>
+                <div class="lab-cards">
+                    <div class="lab-card" onclick="enterLab('Lab Escuela')">
+                        Laboratorio Escuela
+                    </div>
+                </div>
+            </div>
+
+            <div class="category-group">
+                <h4>🎓 Categoría: Colegio</h4>
+                <div class="lab-cards">
+                    <div class="lab-card" onclick="enterLab('Laboratorio 1')">
+                        Laboratorio 1
+                    </div>
+                    <div class="lab-card" onclick="enterLab('Laboratorio 2')">
+                        Laboratorio 2
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="dashboard-section" class="hidden-section">
+        <header class="top-bar">
+            <button onclick="goBack()" class="btn-back">← Volver</button>
+            <h2 id="current-lab-title">Laboratorio</h2>
+        </header>
+
+        <div class="dashboard-grid">
+            <main class="schedule-panel">
+                <div class="controls">
+                    <button onclick="addHourRow()" class="btn-add">+ Añadir Hora</button>
+                    
+                    <div class="filters">
+                        <span>Filtrar por:</span>
+                        <input type="text" id="filter-input" placeholder="Docente, Materia o Motivo..." onkeyup="filterTable()">
+                    </div>
+                </div>
+
+                <div class="legend">
+                    <span class="dot green"></span> Disponible
+                    <span class="dot yellow"></span> Reservado
+                    <span class="dot red"></span> Ocupado
+                </div>
+
+                <table id="schedule-table">
+                    <thead>
+                        <tr>
+                            <th>Horario</th>
+                            <th>Estado</th>
+                            <th>Docente / Motivo</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="schedule-body">
+                        </tbody>
+                </table>
+            </main>
+
+            <aside class="sidebar">
+                <div class="notifications-box">
+                    <h3>🔔 Notificaciones</h3>
+                    <ul id="notification-list">
+                        </ul>
+                </div>
+
+                <div class="report-box">
+                    <h3>⚠️ Reportar Avería</h3>
+                    <textarea id="report-text" placeholder="Describa el problema con la máquina o bien..."></textarea>
+                    <button onclick="sendReport()" class="btn-warning">Enviar Reporte</button>
+                </div>
+            </aside>
+        </div>
+    </section>
+
+    <div id="modal-edit" class="modal hidden-modal">
+        <div class="modal-content">
+            <h3>Modificar Horario: <span id="modal-time"></span></h3>
+            
+            <label>Estado:</label>
+            <select id="modal-status" onchange="toggleCommentField()">
+                <option value="free">Desocupado (Verde)</option>
+                <option value="reserved">Reservado (Amarillo)</option>
+                <option value="occupied">Ocupado (Rojo)</option>
+            </select>
+
+            <div id="comment-section" class="hidden">
+                <label>Materia / Motivo:</label>
+                <input type="text" id="modal-materia" placeholder="Ej: Matemáticas">
+                <label>Comentarios Justificativos:</label>
+                <textarea id="modal-comment" placeholder="Detalles de la práctica..."></textarea>
+            </div>
+
+            <div class="modal-actions">
+                <button onclick="closeModal()" class="btn-cancel">Cancelar</button>
+                <button onclick="saveSlot()" class="btn-save">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
